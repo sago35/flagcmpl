@@ -1,3 +1,27 @@
+/*
+	Package flagcmpl adds completion to flag package.
+
+	Usage:
+
+	Use `flagcmpl.Parse()` instead of `flag.Parse()`.
+
+		package main
+
+		import "flag"
+		import "github.com/sago35/go-flagcmpl"
+
+		var verbose = flag.Bool("verbose", false, "Verbose mode.")
+
+		func main() {
+			flagcmpl.Parse()
+		}
+
+	Add your bash_profile (or equivalent).
+
+		eval "$(your-cli-tool --completion-script-bash)"
+
+	By ending your argv with `--`, hints for flags will be shown.
+*/
 package flagcmpl
 
 import (
@@ -9,6 +33,8 @@ import (
 	"strings"
 )
 
+// Parse parses the command-line flags from os.Args[1:].
+// Generate completion bash script if os.Args[1:] has `--completion-script-bash`.
 func Parse() {
 
 	var args []string
