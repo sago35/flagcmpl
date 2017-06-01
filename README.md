@@ -9,7 +9,7 @@ Use `flagcmpl.Parse()` instead of `flag.Parse()`.
     package main
 
     import "flag"
-    import "github.com/sago35/go-flagcmpl"
+    import "github.com/sago35/flagcmpl"
 
     var verbose = flag.Bool("verbose", false, "Verbose mode.")
 
@@ -25,7 +25,7 @@ By ending your argv with `--`, hints for flags will be shown.
 
 ## Install
 
-    go get github.com/sago35/go-flagcmpl
+    go get github.com/sago35/flagcmpl
 
 ## Licence
 

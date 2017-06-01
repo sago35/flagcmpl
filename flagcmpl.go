@@ -8,7 +8,7 @@
 		package main
 
 		import "flag"
-		import "github.com/sago35/go-flagcmpl"
+		import "github.com/sago35/flagcmpl"
 
 		var verbose = flag.Bool("verbose", false, "Verbose mode.")
 
