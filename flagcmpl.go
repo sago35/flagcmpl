@@ -16,6 +16,23 @@
 			flagcmpl.Parse()
 		}
 
+	Or you can use `flag.FlagSet()`.
+
+		package main
+
+		import (
+			"flag"
+			"github.com/sago35/flagcmpl"
+			"os"
+		)
+
+		func main() {
+			flags := flag.NewFlagSet("sample2", flag.ExitOnError)
+			flags.Bool("verbose", false, "Verbose mode.")
+
+			flagcmpl.ParseFlagSet(os.Args[0], flags, os.Args)
+		}
+
 	Add your bash_profile (or equivalent).
 
 		eval "$(your-cli-tool --completion-script-bash)"
@@ -36,19 +53,25 @@ import (
 // Parse parses the command-line flags from os.Args[1:].
 // Generate completion bash script if os.Args[1:] has `--completion-script-bash`.
 func Parse() {
+	ParseFlagSet(os.Args[0], flag.CommandLine, os.Args)
+}
 
-	var args []string
-	for _, arg := range os.Args[1:] {
+// ParseFlagSet parses the command-line flags from appName, fs and argv.
+// Generate completion bash script if args[1:] has `--completion-script-bash`.
+func ParseFlagSet(appName string, fs *flag.FlagSet, args []string) {
+
+	var argsNew []string
+	for _, arg := range args[1:] {
 		if arg == `--completion-script-bash` {
-			fmt.Println(makeCompletionBash(os.Args[0], flag.CommandLine))
+			fmt.Println(makeCompletionBash(args[0], fs))
 			os.Exit(0)
 		} else {
-			args = append(args, arg)
+			argsNew = append(argsNew, arg)
 		}
 	}
 
-	os.Args = append([]string{os.Args[0]}, args...)
-	flag.Parse()
+	argsNew = append([]string{args[0]}, argsNew...)
+	fs.Parse(argsNew[1:])
 }
 
 func makeCompletionBash(app string, fs *flag.FlagSet) string {
