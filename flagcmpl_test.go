@@ -35,3 +35,16 @@ complete -F _sample sample
 		t.Errorf("not match\n[%s]\n[%s]", output, expected)
 	}
 }
+
+func ExampleParse() {
+	var verbose = flag.Bool("verbose", false, "Verbose mode.")
+
+	flagcmpl.Parse()
+}
+
+func ExampleParseFlagSet() {
+	flags := flag.NewFlagSet("sample2", flag.ExitOnError)
+	flags.Bool("verbose", false, "Verbose mode.")
+
+	flagcmpl.ParseFlagSet(os.Args[0], flags, os.Args)
+}
