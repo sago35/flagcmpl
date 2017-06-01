@@ -17,6 +17,23 @@ Use `flagcmpl.Parse()` instead of `flag.Parse()`.
         flagcmpl.Parse()
     }
 
+Or you can use `flag.FlagSet()`.
+
+    package main
+
+    import (
+        "flag"
+        "github.com/sago35/flagcmpl"
+        "os"
+    )
+
+    func main() {
+        flags := flag.NewFlagSet("sample2", flag.ExitOnError)
+        flags.Bool("verbose", false, "Verbose mode.")
+
+        flagcmpl.ParseFlagSet(os.Args[0], flags, os.Args)
+    }
+
 Add your bash_profile (or equivalent).
 
     eval "$(your-cli-tool --completion-script-bash)"
