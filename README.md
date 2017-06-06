@@ -2,6 +2,12 @@
 
 Package flagcmpl adds completion to flag package.
 
+## Demo
+
+This is a demo of ./sample3
+
+![](./sample3/sample3.gif)
+
 ## Usage
 
 Use `flagcmpl.Parse()` instead of `flag.Parse()`.
