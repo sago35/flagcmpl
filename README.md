@@ -1,4 +1,5 @@
 # flagcmpl
+[![Build Status](https://travis-ci.org/sago35/flagcmpl.svg?branch=master)](https://travis-ci.org/sago35/flagcmpl)
 
 Package flagcmpl adds completion to flag package.
 
