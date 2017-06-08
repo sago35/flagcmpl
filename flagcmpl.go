@@ -1,43 +1,43 @@
 /*
-	Package flagcmpl adds completion to flag package.
+Package flagcmpl adds completion to flag package.
 
-	Usage:
+Usage:
 
-	Use `flagcmpl.Parse()` instead of `flag.Parse()`.
+Use `flagcmpl.Parse()` instead of `flag.Parse()`.
 
-		package main
+	package main
 
-		import "flag"
-		import "github.com/sago35/flagcmpl"
+	import "flag"
+	import "github.com/sago35/flagcmpl"
 
-		var verbose = flag.Bool("verbose", false, "Verbose mode.")
+	var verbose = flag.Bool("verbose", false, "Verbose mode.")
 
-		func main() {
-			flagcmpl.Parse()
-		}
+	func main() {
+		flagcmpl.Parse()
+	}
 
-	Or you can use `flag.FlagSet()`.
+Or you can use `flag.FlagSet()`.
 
-		package main
+	package main
 
-		import (
-			"flag"
-			"github.com/sago35/flagcmpl"
-			"os"
-		)
+	import (
+		"flag"
+		"github.com/sago35/flagcmpl"
+		"os"
+	)
 
-		func main() {
-			flags := flag.NewFlagSet("sample2", flag.ExitOnError)
-			flags.Bool("verbose", false, "Verbose mode.")
+	func main() {
+		flags := flag.NewFlagSet("sample2", flag.ExitOnError)
+		flags.Bool("verbose", false, "Verbose mode.")
 
-			flagcmpl.ParseFlagSet(os.Args[0], flags, os.Args)
-		}
+		flagcmpl.ParseFlagSet(os.Args[0], flags, os.Args)
+	}
 
-	Add your bash_profile (or equivalent).
+Add your bash_profile (or equivalent).
 
-		eval "$(your-cli-tool --completion-script-bash)"
+	eval "$(your-cli-tool --completion-script-bash)"
 
-	By ending your argv with `--`, hints for flags will be shown.
+By ending your argv with `--`, hints for flags will be shown.
 */
 package flagcmpl
 
@@ -52,13 +52,13 @@ import (
 
 // Parse parses the command-line flags from os.Args[1:].
 // Generate completion bash script if os.Args[1:] has `--completion-script-bash`.
-func Parse() {
-	ParseFlagSet(os.Args[0], flag.CommandLine, os.Args)
+func Parse() error {
+	return ParseFlagSet(os.Args[0], flag.CommandLine, os.Args)
 }
 
 // ParseFlagSet parses the command-line flags from appName, fs and argv.
 // Generate completion bash script if args[1:] has `--completion-script-bash`.
-func ParseFlagSet(appName string, fs *flag.FlagSet, args []string) {
+func ParseFlagSet(appName string, fs *flag.FlagSet, args []string) error {
 
 	var argsNew []string
 	for _, arg := range args[1:] {
@@ -71,7 +71,7 @@ func ParseFlagSet(appName string, fs *flag.FlagSet, args []string) {
 	}
 
 	argsNew = append([]string{args[0]}, argsNew...)
-	fs.Parse(argsNew[1:])
+	return fs.Parse(argsNew[1:])
 }
 
 func makeCompletionBash(app string, fs *flag.FlagSet) string {
